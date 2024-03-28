@@ -14,18 +14,50 @@ cd PhysioAI
 Virtual environments are great for managing dependencies of a Python project. We can install specific versions of the dependencies, independent of the global packages. Make sure you have the `venv` package installed, which usually comes with the default Python installation.
 To create a venv for this project:
 ```
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv ./venv
+source ./venv/bin/activate
 ```
 
-To exit the venv:
+If you want to exit the venv:
 ```
 deactive
 ```
 
+## Prepare Database
+
+Before running the project, you need to set up a MySQL database. Follow these steps:
+
+1. Install MySQL Server if you haven't already. You can download it from the official MySQL website.
+
+2. Once MySQL is installed, open the MySQL command-line client or a GUI tool like MySQL Workbench.
+
+3. Log in with a user that has sufficient privileges to create new users and grant privileges. Usually, this is the 'root' user.
+
+4. Create a new database for the project:
+
+```sql
+CREATE DATABASE physioai;
+```
+
+5. Create a new user and grant it all privileges on the new database. Replace 'username' and 'password' with the username and password you want to use:
+
+```sql
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON physioai.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+```
+6. Create a `.env` file in the `src` directory and add the following lines to it:
+
+```env
+DB_NAME=physioai
+DB_USER=username
+DB_PASSWORD=password
+DB_HOST=localhost
+```
+
 ## Running the project locally
 
-To install dependencies, run the following
+After making a venv, to install dependencies run the following:
 ```
 pip3 install -r requirements.txt
 ```
