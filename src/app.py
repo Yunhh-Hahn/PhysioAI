@@ -1,4 +1,5 @@
 import accounts
+import physion
 
 def register_user():
     username = input("Enter username: ")
@@ -25,7 +26,10 @@ def main_menu():
 def user_menu(username):
     print(f"[{username}] > ", end="")
     user_input = input()
+    if user_input.lower() == "physion":
+        physion.start_video_stream()
     return user_input.lower()
+
 
 def main():
     logged_in_user = None
