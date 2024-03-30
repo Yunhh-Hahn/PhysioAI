@@ -49,6 +49,7 @@ FLUSH PRIVILEGES;
 6. Create a `.env` file in the `src` directory and add the following lines to it:
 
 ```env
+OPENAI_API_KEY=sk-abcdefghijklmnopquwsyz123456789
 DB_NAME=physioai
 DB_USER=username
 DB_PASSWORD=password
