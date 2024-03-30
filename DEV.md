@@ -2,11 +2,16 @@
 
 ## Prereqs
 
-You need to have Python3 installed along with the latest version of pip.
 To install the project and run it in a local environment, follow these steps:
 ```
 git clone https://github.com/Nakul727/PhysioAI.git
 cd PhysioAI
+```
+
+You need to have `pyenv` installed which is a python version manager. This project requires the use of python 3.9.7, so we are going to use pyenv to configure that version in the local env. Make sure to install `pyenv` correctly. The .python_verison file in the cloned repo should set the version after installation of pyenv and version 3.9.7:
+```
+pyenv install 3.9.7
+pyenv local 3.9.7
 ```
 
 ## Creating a virtual environment
@@ -14,8 +19,8 @@ cd PhysioAI
 Virtual environments are great for managing dependencies of a Python project. We can install specific versions of the dependencies, independent of the global packages. Make sure you have the `venv` package installed, which usually comes with the default Python installation.
 To create a venv for this project:
 ```
-python3 -m venv ./venv
-source ./venv/bin/activate
+python -m venv /venv
+source /venv/bin/activate
 ```
 
 If you want to exit the venv:
@@ -46,27 +51,15 @@ CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON physioai.* TO 'username'@'localhost';
 FLUSH PRIVILEGES;
 ```
-6. Create a `.env` file in the `src` directory and add the following lines to it:
-
-```env
-OPENAI_API_KEY=sk-abcdefghijklmnopquwsyz123456789
-DB_NAME=physioai
-DB_USER=username
-DB_PASSWORD=password
-DB_HOST=localhost
-```
+6. Create a `.env` file in the `src` directory using .env.example as reference
 
 ## Running the project locally
 
-After making a venv, to install dependencies run the following:
+After making a venv and installing correct python version, to install dependencies run the following:
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
-
-After installing dependencies:
-
-1. Run registration.py to create an empty database first 
-2. Open two cmd or two terminal
-3. Run server.py first then run client.py
-
-Remove server.close() if want to run infinitely and with multiple client as once
+To run the project, from root directory:
+```
+python src/app.py
+```
