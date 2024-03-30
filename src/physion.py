@@ -25,22 +25,23 @@ options = PoseLandmarkerOptions(
         running_mode=VisionRunningMode.LIVE_STREAM,
         result_callback=print_result)
 
-with PoseLandmarker.create_from_options(options) as landmarker:
-        cap = cv2.VideoCapture(0)
+def physion_bot():
+    with PoseLandmarker.create_from_options(options) as landmarker:
+            cap = cv2.VideoCapture(0)
 
-        while True:
-                ret, frame = cap.read()
-                if not ret:
-                        break
+            while True:
+                    ret, frame = cap.read()
+                    if not ret:
+                            break
 
-                # Convert the frame received from OpenCV to a MediaPipe’s Image object.
-                mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
+                    # Convert the frame received from OpenCV to a MediaPipe’s Image object.
+                    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
 
-                # Send live image data to perform pose landmarking.
-                landmarker.detect_async(mp_image, cv2.getTickCount())
+                    # Send live image data to perform pose landmarking.
+                    landmarker.detect_async(mp_image, cv2.getTickCount())
 
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                        break
+                    if cv2.waitKey(1) & 0xFF == ord('q'):
+                            break
 
-        cap.release()
-        cv2.destroyAllWindows()
+            cap.release()
+            cv2.destroyAllWindows()

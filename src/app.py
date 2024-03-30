@@ -1,4 +1,6 @@
 import accounts
+import chatbot
+import chatdb
 import physion
 
 def register_user():
@@ -26,8 +28,20 @@ def main_menu():
 def user_menu(username):
     print(f"[{username}] > ", end="")
     user_input = input()
-    if user_input.lower() == "physion":
-        physion.start_video_stream()
+    
+    if user_input.lower() == "help":
+        print("Help:")
+        print("1. 'physion' - start cv bot")
+        print("2. 'chat' - ask question to the chatbot")
+        print("3. 'chatdb' - ask question about data stored in db")
+        print("4. 'logout' - logout from your account")
+    elif user_input.lower() == "physion":
+        physion.physion_bot()
+    elif user_input.lower() == "chat":
+        chatbot.chat_with_gpt()
+    elif user_input.lower() == "chatdb":
+        chatdb.chat_with_db()
+
     return user_input.lower()
 
 
