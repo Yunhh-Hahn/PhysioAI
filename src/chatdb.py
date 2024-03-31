@@ -8,8 +8,8 @@ load_dotenv()
 client = OpenAI(api_key= os.environ["OPENAI_API_KEY"],)
 
 hostname = os.getenv("DB_HOST")
-username = 'test'
-password = 'test_p'
+username = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
 port = os.getenv("PORT") 
 database = os.getenv("DB_NAME")
 
