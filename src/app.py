@@ -1,6 +1,5 @@
 import accounts
 import chatbot
-import chatdb
 import physion
 
 def register_user():
