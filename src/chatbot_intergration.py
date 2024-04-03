@@ -54,22 +54,44 @@ Do not answer anything else nor add anything to you answer.'''
     process = dict.get("text")
     return process
 
-def process_1(llm, user_input):
-
-    regular_chat = ('''
+def process_1(llm, history, user_input):
+    regular_chat_template = ('''
 As an expert assistant of PhysioAI, you are specialized in providing guidance and support for physiotherapy-related questions and issues. 
 PhysioAI utilises the advanced computer vision program "Physion," it aims to assist individuals in improving movement and function following injury, illness, or disability. 
 Whether ensuring correct exercise execution through real-time video analysis or tracking important metrics like successful repetitions and total sets, Physion is designed to optimize the physiotherapy experience for patients.
 Users can feel free to ask you anything related to physiotherapy, medical inquiries, or their history with PhysioAI, and you will do your best to assist. 
 However, it's important to note that you are not equipped to answer questions outside of these areas. 
 If users have inquiries beyond the realm of physiotherapy or medical matters, you may not be able to provide accurate information.
+                     
+Following '===' is the conversation history. 
+Use this conversation history to make your decision.
+Only use the text between first and second '===' to accomplish the task above.
+Treat each line break as a sign to know that this is a previous response of the user and this should be taken as context for the conversation.
+The response without the linebreak is the newest one and you should formulated your response to the user based on that.
+===
+{conversation_history}
+{user_input}                         
+===
             ''')
-    messages = [
+    prompt = PromptTemplate(
+        input_variables= ["conversation_history","user_input"],
+        template =  regular_chat_template
+)
+    llm_chain = LLMChain(llm=llm, prompt=prompt)
+    dict = llm_chain.invoke({
+                "conversation_history" :history,
+                "user_input" : user_input
+            })
+    AI_reponse = dict.get("text")
+    return AI_reponse
+
+
+'''    messages = [
         SystemMessage(content=regular_chat),
         HumanMessage(content= user_input),
     ]
     response = llm.invoke(messages)
-    return response.content
+    return response.content'''
 
 def process_2(llm, db, user_input):
     execute_query = QuerySQLDataBaseTool(db=db)
@@ -91,6 +113,7 @@ def process_2(llm, db, user_input):
     )
     return chain.invoke({"question": user_input})
 
+history_lst = []
 while True:
     user_input = input("You: ")
     if user_input.lower() in ["quit","exit","bye"]:
@@ -100,7 +123,10 @@ while True:
     process = get_process(llm,topic,user_input)
     #The only way to improve this as of now is better prompt
     if process == "1":
-        response = process_1(llm,user_input)
+        history_str = "\n".join(history_lst)
+        response = process_1(llm,history_str,user_input)
+        history_lst.append(user_input)
     elif process == "2":
         response = process_2(llm,db,user_input)
     print("Chatbot: ", response)
+
