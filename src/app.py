@@ -32,14 +32,11 @@ def user_menu(username):
         print("Help:")
         print("1. 'physion' - start cv bot")
         print("2. 'chat' - ask question to the chatbot")
-        print("3. 'chatdb' - ask question about data stored in db")
-        print("4. 'logout' - logout from your account")
+        print("3. 'logout' - logout from your account")
     elif user_input.lower() == "physion":
         physion.physion_bot()
     elif user_input.lower() == "chat":
-        chatbot.chat_with_gpt()
-    elif user_input.lower() == "chatdb":
-        chatdb.chat_with_db()
+        chatbot.chatbot()
 
     return user_input.lower()
 

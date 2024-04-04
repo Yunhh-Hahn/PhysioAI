@@ -107,24 +107,24 @@ def process_2(llm, db, user_input):
         | answer
     )
     return chain.invoke({"question": user_input})
-
-history_lst = []
-while True:
-    user_input = input("You: ")
-    #Input inside database table in the form of string 
-    topic = 'city,country, country language'
-    process = get_process(llm,topic,user_input)
-    #The only way to improve this as of now is better prompt
-    response = ''
-    if process == "1" and response!= "exit":
-        history_str = "\n".join(history_lst)
-        response = process_1(llm,history_str,user_input)
-        history_lst.append(f"User: {user_input}")
-        history_lst.append(f"Chatbot: {response}")
-        if response == "exit":
-            print("Chatbot: Thanks you for using our service ")
-            break
-    elif process == "2":
-        response = process_2(llm,db,user_input)
-    print("Chatbot:", response)
+def chatbot():
+    history_lst = []
+    while True:
+        user_input = input("You: ")
+        #Input inside database table in the form of string 
+        topic = 'city,country, country language'
+        process = get_process(llm,topic,user_input)
+        #The only way to improve this as of now is better prompt
+        response = ''
+        if process == "1" and response!= "exit":
+            history_str = "\n".join(history_lst)
+            response = process_1(llm,history_str,user_input)
+            history_lst.append(f"User: {user_input}")
+            history_lst.append(f"Chatbot: {response}")
+            if response == "exit":
+                print("Chatbot: Thanks you for using our service ")
+                break
+        elif process == "2":
+            response = process_2(llm,db,user_input)
+        print("Chatbot:", response)
 
