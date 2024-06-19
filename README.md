@@ -1,3 +1,6 @@
+# PHYSIO AI
+## Project description
+As phsysiotherapy is a needed part in many people daily life, we seeks to make it make more accessible and at the comfort of one's home. An application of computer vision implimented using OpenCV and MediaPipe Pose Detection that announced whether or not you are doing the exercise correctly. 
 # Installation
 
 ## Prereqs
